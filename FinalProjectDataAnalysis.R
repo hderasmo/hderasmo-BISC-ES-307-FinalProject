@@ -56,18 +56,162 @@ mpr_fineRoot <- mpr_perrootsample %>%
 
 mpr_fineRootTot <- mpr_fineRoot %>%
   group_by(siteID) %>%
-  summarise(sumFineRootMass = sum(rootDryMass))
+  summarise(meanFineRootMass = mean(rootDryMass))
 
-##c.	Full_join the two dataframes by siteID
+##Full_join the two dataframes by siteID
 
 nutrient_rootDF <- left_join(mpr_fineRootTot, mgp_nutrientSiteMean,
                              by = c("siteID")) %>%
   filter(is.na(meanSiteN) == FALSE)
 
-ggplot(data = nutrient_rootDF) +
-  geom_point(aes(x = meanSiteN, y = sumFineRootMass), color = "blue") +
-  geom_point(aes(x = meanSiteS, y = sumFineRootMass), color = "red") +
-  geom_point(aes(x = meanSiteP, y = sumFineRootMass), color = "green") 
+##Add in a column for dominant ecosystem type
+
+Time <- length(nutrient_rootDF$siteID)
+nutrient_rootDF$NLCDClass <- numeric()
+
+for (t in 1:Time){
+  if (nutrient_rootDF$siteID[t] == "BART"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Deciduous Forest"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "BLAN"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Deciduous Forest"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "CLBJ"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Deciduous Forest"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "CPER"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Emergent Herbaceous Wetlands"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "DCFS"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Grassland/Herbaceous"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "DELA"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Evergreen Forest"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "DSNY"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Pasture/Hay"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "HARV"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Deciduous Forest"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "HEAL"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Dwarf Scrub"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "JERC"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Cultivated Crops"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "JORN"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Shrub/Scrub"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "MLBS"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Deciduous Forest"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "MOAB"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Evergreen Forest"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "NOGP"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Grassland/Herbaceous"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "OAES"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Grassland/Herbaceous"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "ORNL"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Deciduous Forest"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "OSBS"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Emergent Herbaceous Wetlands"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "RMNP"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Evergreen Forest"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "SCBI"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Deciduous Forest"
+  }
+  
+  else if (nutrient_rootDF$siteID[t] == "SJER"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Evergreen Forest"
+  }
+ 
+  else if (nutrient_rootDF$siteID[t] == "SOAP"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Evergreen Forest"
+  } 
+ 
+  else if (nutrient_rootDF$siteID[t] == "SRER"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Shrub/Scrub"
+  }  
+  
+  else if (nutrient_rootDF$siteID[t] == "TALL"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Deciduous Forest"
+  }  
+  
+  else if (nutrient_rootDF$siteID[t] == "TEAK"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Evergreen Forest"
+  }  
+  
+  else if (nutrient_rootDF$siteID[t] == "UNDE"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Deciduous Forest"
+  }   
+  
+  else if (nutrient_rootDF$siteID[t] == "WOOD"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Emergent Herbaceous Wetlands"
+  }  
+  
+  else if (nutrient_rootDF$siteID[t] == "WREF"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Evergreen Forest"
+  }   
+  
+  else if (nutrient_rootDF$siteID[t] == "YELL"){
+    
+    nutrient_rootDF$NLCDClass[t] <- "Evergreen Forest"
+  }   
+  
+}
+
 
 #Examine data distribution
 ggplot(data = nutrient_rootDF) +
@@ -80,27 +224,7 @@ ggplot(data = nutrient_rootDF) +
   geom_freqpoly(aes(x = meanSiteP))
 
 ggplot(data = nutrient_rootDF) +
-  geom_freqpoly(aes(x = sumFineRootMass))
-
-#Log-transform data based on skewed distributions
-nutrient_rootLog <- nutrient_rootDF %>%
-         mutate(logMeanSiteN = log(meanSiteN),
-                logMeanSiteP = log(meanSiteP),
-                logMeanSiteS = log(meanSiteS),
-                logSumFineRootMass = log(sumFineRootMass))
-
-#Examine log data distribution
-ggplot(data = nutrient_rootLog) +
-  geom_freqpoly(aes(x = logMeanSiteN))
-
-ggplot(data = nutrient_rootLog) +
-  geom_freqpoly(aes(x = logMeanSiteS))
-
-ggplot(data = nutrient_rootLog) +
-  geom_freqpoly(aes(x = logMeanSiteP))
-
-ggplot(data = nutrient_rootLog) +
-  geom_freqpoly(aes(x = logSumFineRootMass))
+  geom_freqpoly(aes(x = meanFineRootMass))
 
 
 ###Making a faceted series of plots that pairwise correlations
@@ -108,7 +232,7 @@ ggplot(data = nutrient_rootLog) +
 
 #Select the continuous variables from the dataset
 nutrient_rootContin <- nutrient_rootDF %>%
-  select(sumFineRootMass, meanSiteN,
+  select(meanFineRootMass, meanSiteN,
          meanSiteP, meanSiteS) %>%
   drop_na()
 
@@ -137,10 +261,10 @@ corrplot(nutrient_rootCorrelation$r, type = "upper",
 nutrient_rootPCA <- nutrient_rootDF 
   
 
-#Make SiteID its own vector object and then remove it from the PCA dataframe
-siteID_vector <- as.vector(nutrient_rootPCA$siteID)
+#Make NLCD Class its own vector object and then remove it from the PCA dataframe
+NLCDClass_vector <- as.vector(nutrient_rootPCA$NLCDClass)
 nutrient_rootPCA <- nutrient_rootPCA %>%
-  select(-siteID)
+  select(-NLCDClass, -siteID)
 
 #Estimate the PCA Model
 nutrient_rootpca_est <- prcomp(nutrient_rootPCA, center= TRUE, scale.=TRUE)
@@ -164,4 +288,20 @@ fviz_pca_var(nutrient_rootpca_est,
   theme_bw()
 #the three soil nutrient variables appear to be positively correlated with each other.
 #There does not appear to be any correlation with the fine root mass 
+
+##PCA colored by NLCDClass to see if that reveals any trends
+
+
+fviz_pca_biplot(nutrient_rootpca_est,
+                #geom.ind = "point", 
+                geom = "point",
+                #pointShape = c(),
+                col.ind = NLCDClass_vector, 
+                mean.point = FALSE, 
+                addEllipses = TRUE, 
+                col.var = "black", 
+                legend.title = "NLCD Class")  +
+  scale_shape_manual(values=c(16, 16, 16, 16, 16, 16, 16, 16)) +
+
+  theme_bw()
 
