@@ -1,3 +1,9 @@
+#Author: Hope D'Erasmo
+#Date last modified: 12/16/2020
+#Title: Able to Flourish or No-Longer Needed: Investigating
+#Biomass of Fine Roots in Relation to Soil Nutrient Levels in 
+#NEON Field Sites
+
 #Load needed libraries
 library(neonUtilities)
 library(ggplot2)
@@ -52,7 +58,7 @@ mpr_fineRoot <- mpr_perrootsample %>%
   filter(sizeCategory == "<=2mm") %>%
   select(siteID, pitNamedLocation, sizeCategory, rootDryMass)
 
-#Summarize to create an sum of rootDryMass for each megapit
+#Summarize to create a sum of rootDryMass for each megapit
 
 mpr_fineRootTot <- mpr_fineRoot %>%
   group_by(siteID) %>%
@@ -64,7 +70,8 @@ nutrient_rootDF <- left_join(mpr_fineRootTot, mgp_nutrientSiteMean,
                              by = c("siteID")) %>%
   filter(is.na(meanSiteN) == FALSE)
 
-##Add in a column for dominant ecosystem type
+##Add in a column for dominant ecosystem type 
+#This is the NLCD Class listed first in the NEON-filed-sites.csv file
 
 Time <- length(nutrient_rootDF$siteID)
 nutrient_rootDF$NLCDClass <- numeric()
